@@ -1,0 +1,22 @@
+name: Build Command Documentation
+run-name: Build Command Documenation for ${{inputs.target_version}}
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_version:
+        type: string
+        required: true
+
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: command
+        fetch-depth: 0
+    - run: cargo install mdbook
+    - run: ./manual/template/build.sh ${{inputs.target_version}}
